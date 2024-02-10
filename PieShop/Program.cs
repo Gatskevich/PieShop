@@ -25,8 +25,6 @@ builder.Services.AddDbContext<PieShopDbContext>(options =>
         builder.Configuration["ConnectionStrings:PieShopDbContextConnection"]);
 });
 
-builder.Services.AddControllers();
-
 var app = builder.Build();
 
 app.UseStaticFiles();
@@ -40,8 +38,6 @@ if (app.Environment.IsDevelopment())
 app.MapDefaultControllerRoute();
 
 app.MapRazorPages();
-
-app.MapControllers();
 
 DbInitializer.Seed(app);
 
