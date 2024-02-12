@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using PieShop.Models;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("PieShopDbContextConnection") ?? throw new InvalidOperationException("Connection string 'PieShopDbContextConnection' not found.");
 
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
@@ -26,6 +28,9 @@ builder.Services.AddDbContext<PieShopDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:PieShopDbContextConnection"]);
 });
+
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddEntityFrameworkStores<PieShopDbContext>();
 
 var app = builder.Build();
 
